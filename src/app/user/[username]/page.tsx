@@ -5,6 +5,7 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import RepoCard, { type GitHubRepo } from '@/components/RepoCard';
 import SummarySection from '@/components/SummarySection';
+import NotesButton from '@/components/NotesButton';
 
 interface UserPageProps {
   params: {
@@ -41,7 +42,14 @@ async function fetchUserRepos(username: string) {
 
 async function UserProfile({ username }: { username: string }) {
   const user = await fetchUserData(username);
-  return <UserCard user={user} />;
+  return (
+    <div className="space-y-4">
+      <UserCard user={user} />
+      <div className="flex justify-end">
+        <NotesButton storageKey={`note:user:${user.login}`} label="Add User Note" />
+      </div>
+    </div>
+  );
 }
 
 async function UserRepos({ username }: { username: string }) {
@@ -56,7 +64,12 @@ async function UserRepos({ username }: { username: string }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {repos.map((repo) => (
-        <RepoCard key={repo.id} repo={repo} />
+        <div key={repo.id} className="space-y-3">
+          <RepoCard repo={repo} />
+          <div className="flex justify-end">
+            <NotesButton storageKey={`note:repo:${username}:${repo.name}`} label="Add Repo Note" />
+          </div>
+        </div>
       ))}
     </div>
   );
