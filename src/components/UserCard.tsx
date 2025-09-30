@@ -1,33 +1,12 @@
 import Image from 'next/image';
-
-interface GitHubUser {
-  id: number;
-  login: string;
-  name: string | null;
-  bio: string | null;
-  location: string | null;
-  avatar_url: string;
-  public_repos: number;
-  followers: number;
-  following: number;
-  html_url: string;
-  created_at: string;
-  updated_at: string;
-}
+import type { GitHubUser } from '@/types';
+import { formatDate } from '@/utils';
 
 interface UserCardProps {
   user: GitHubUser;
 }
 
 export default function UserCard({ user }: UserCardProps) {
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
-
   return (
     <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
       {/* Header with avatar and basic info */}

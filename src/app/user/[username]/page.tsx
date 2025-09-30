@@ -3,10 +3,11 @@ import Link from 'next/link';
 import UserCard from '@/components/UserCard';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import ErrorBoundary from '@/components/ErrorBoundary';
-import { type GitHubRepo } from '@/components/RepoCard';
+import type { GitHubRepo } from '@/types';
 import RepoGrid from '@/components/RepoGrid';
 import SummarySection from '@/components/SummarySection';
 import NotesButton from '@/components/NotesButton';
+import { fetchUser, fetchUserRepos } from '@/lib/github';
 
 interface UserPageProps {
   params: {
@@ -14,35 +15,8 @@ interface UserPageProps {
   };
 }
 
-async function fetchUserData(username: string) {
-  const res = await fetch(`https://api.github.com/users/${encodeURIComponent(username)}`, {
-    next: { revalidate: 300 }, // Cache for 5 minutes
-  });
-
-  if (!res.ok) {
-    if (res.status === 404) {
-      throw new Error('User not found');
-    }
-    throw new Error('Failed to fetch user data');
-  }
-
-  return res.json();
-}
-
-async function fetchUserRepos(username: string) {
-  const res = await fetch(`https://api.github.com/users/${encodeURIComponent(username)}/repos?per_page=50&sort=updated`, {
-    next: { revalidate: 120 }, // Cache repos briefly
-  });
-
-  if (!res.ok) {
-    throw new Error('Failed to fetch repositories');
-  }
-
-  return res.json() as Promise<GitHubRepo[]>;
-}
-
 async function UserProfile({ username }: { username: string }) {
-  const user = await fetchUserData(username);
+  const user = await fetchUser(username);
   return (
     <div className="space-y-4">
       <UserCard user={user} />
@@ -54,7 +28,7 @@ async function UserProfile({ username }: { username: string }) {
 }
 
 async function UserRepos({ username }: { username: string }) {
-  const repos = await fetchUserRepos(username);
+  const repos: GitHubRepo[] = await fetchUserRepos(username);
 
   if (!repos.length) {
     return (

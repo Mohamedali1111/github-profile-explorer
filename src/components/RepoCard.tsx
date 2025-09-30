@@ -1,17 +1,5 @@
 import Link from 'next/link';
-
-export interface GitHubRepo {
-	id: number;
-	name: string;
-	description: string | null;
-	stargazers_count: number;
-	language: string | null;
-	html_url: string;
-	updated_at: string;
-	fork: boolean;
-	archived: boolean;
-	visibility?: string;
-}
+import type { GitHubRepo } from '@/types';
 
 interface RepoCardProps {
 	repo: GitHubRepo;

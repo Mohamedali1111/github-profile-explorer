@@ -1,7 +1,8 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import RepoCard, { type GitHubRepo } from './RepoCard';
+import RepoCard from './RepoCard';
+import type { GitHubRepo } from '@/types';
 
 type SortKey = 'stars' | 'updated' | 'name';
 
