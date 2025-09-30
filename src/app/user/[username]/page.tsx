@@ -4,6 +4,7 @@ import UserCard from '@/components/UserCard';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import RepoCard, { type GitHubRepo } from '@/components/RepoCard';
+import SummarySection from '@/components/SummarySection';
 
 interface UserPageProps {
   params: {
@@ -91,6 +92,11 @@ export default function UserPage({ params }: UserPageProps) {
             <UserRepos username={username} />
           </Suspense>
         </ErrorBoundary>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-xl font-semibold text-gray-900">AI Analysis</h2>
+        <SummarySection username={username} />
       </section>
     </main>
   );
