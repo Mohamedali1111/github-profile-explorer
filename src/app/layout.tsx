@@ -27,13 +27,13 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-gray-900`}> 
+			<body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100 transition-colors`}> 
 				<div className="min-h-dvh">
-					<header className="sticky top-0 z-40 backdrop-blur bg-white/70 border-b border-gray-200">
+					<header className="sticky top-0 z-40 backdrop-blur bg-white/70 dark:bg-gray-950/70 border-b border-gray-200 dark:border-gray-800">
 						<div className="container mx-auto max-w-4xl px-6 py-3 flex items-center justify-between">
-							<Link href="/" className="font-semibold">GitHub Explorer</Link>
+							<Link href="/" className="font-semibold hover:opacity-90">GitHub Explorer</Link>
 							<div className="flex items-center gap-3">
-								<Link href="/compare" className="text-sm text-gray-700 hover:text-gray-900">Compare</Link>
+								<Link href="/compare" className="text-sm text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">Compare</Link>
 								<ThemeToggle />
 							</div>
 						</div>
