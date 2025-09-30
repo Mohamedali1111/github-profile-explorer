@@ -9,12 +9,6 @@ import SummarySection from '@/components/SummarySection';
 import NotesButton from '@/components/NotesButton';
 import { fetchUser, fetchUserRepos } from '@/lib/github';
 
-interface UserPageProps {
-  params: {
-    username: string;
-  };
-}
-
 async function UserProfile({ username }: { username: string }) {
   const user = await fetchUser(username);
   return (
@@ -48,8 +42,8 @@ async function UserRepos({ username }: { username: string }) {
   );
 }
 
-export default function UserPage({ params }: UserPageProps) {
-  const { username } = params;
+export default async function UserPage({ params }: { params: Promise<{ username: string }> }) {
+  const { username } = await params;
 
   return (
     <main className="container mx-auto max-w-4xl px-6 py-8 space-y-8">

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import CompareTable, { type CompareMetrics } from '@/components/CompareTable';
-import type { GitHubRepo as Repo } from '@/components/RepoCard';
+import type { GitHubRepo as Repo } from '@/types';
 
 async function fetchJson<T>(url: string) {
 	const res = await fetch(url, { cache: 'no-store' });
