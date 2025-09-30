@@ -3,7 +3,8 @@ import Link from 'next/link';
 import UserCard from '@/components/UserCard';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import ErrorBoundary from '@/components/ErrorBoundary';
-import RepoCard, { type GitHubRepo } from '@/components/RepoCard';
+import { type GitHubRepo } from '@/components/RepoCard';
+import RepoGrid from '@/components/RepoGrid';
 import SummarySection from '@/components/SummarySection';
 import NotesButton from '@/components/NotesButton';
 
@@ -62,13 +63,11 @@ async function UserRepos({ username }: { username: string }) {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div className="space-y-3">
+      <RepoGrid repos={repos} />
       {repos.map((repo) => (
-        <div key={repo.id} className="space-y-3">
-          <RepoCard repo={repo} />
-          <div className="flex justify-end">
-            <NotesButton storageKey={`note:repo:${username}:${repo.name}`} label="Add Repo Note" />
-          </div>
+        <div key={repo.id} className="flex justify-end">
+          <NotesButton storageKey={`note:repo:${username}:${repo.name}`} label="Add Repo Note" />
         </div>
       ))}
     </div>
