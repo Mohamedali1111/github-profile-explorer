@@ -22,5 +22,5 @@ body {
 	@apply text-3xl md:text-5xl font-semibold tracking-tight;
 }
 .muted {
-	@apply text-muted-foreground;
+	@apply text-gray-500;
 }

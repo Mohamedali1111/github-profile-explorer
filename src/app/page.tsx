@@ -1,6 +1,3 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-
 export default function Home() {
 	return (
 		<main className="container mx-auto max-w-4xl px-6 py-16">
