@@ -3,6 +3,19 @@ interface SummaryBoxProps {
   isLoading?: boolean;
 }
 
+function renderInline(text: string) {
+  const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g);
+  return parts.map((part, idx) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return <strong key={idx}>{part.slice(2, -2)}</strong>;
+    }
+    if (part.startsWith('*') && part.endsWith('*')) {
+      return <em key={idx}>{part.slice(1, -1)}</em>;
+    }
+    return <span key={idx}>{part}</span>;
+  });
+}
+
 export default function SummaryBox({ summary, isLoading = false }: SummaryBoxProps) {
   if (isLoading) {
     return (
@@ -50,7 +63,7 @@ export default function SummaryBox({ summary, isLoading = false }: SummaryBoxPro
       <div className="prose prose-sm max-w-none text-gray-700">
         {summary.split('\n').map((paragraph, index) => (
           <p key={index} className="mb-3 last:mb-0">
-            {paragraph.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>')}
+            {renderInline(paragraph)}
           </p>
         ))}
       </div>
