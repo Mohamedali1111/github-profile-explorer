@@ -30,16 +30,7 @@ async function UserRepos({ username }: { username: string }) {
     );
   }
 
-  return (
-    <div className="space-y-3">
-      <RepoGrid repos={repos} />
-      {repos.map((repo) => (
-        <div key={repo.id} className="flex justify-end">
-          <NotesButton storageKey={`note:repo:${username}:${repo.name}`} label="Add Repo Note" />
-        </div>
-      ))}
-    </div>
-  );
+  return <RepoGrid repos={repos} />;
 }
 
 export default async function UserPage({ params }: { params: Promise<{ username: string }> }) {
