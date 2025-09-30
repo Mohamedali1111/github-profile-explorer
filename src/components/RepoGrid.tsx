@@ -8,9 +8,10 @@ type SortKey = 'stars' | 'updated' | 'name';
 
 interface RepoGridProps {
 	repos: GitHubRepo[];
+	username: string;
 }
 
-export default function RepoGrid({ repos }: RepoGridProps) {
+export default function RepoGrid({ repos, username }: RepoGridProps) {
 	const [sortKey, setSortKey] = useState<SortKey>('updated');
 	const [language, setLanguage] = useState<string>('all');
 
@@ -56,7 +57,7 @@ export default function RepoGrid({ repos }: RepoGridProps) {
 			</div>
 			<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 				{filtered.map(repo => (
-					<RepoCard key={repo.id} repo={repo} />
+					<RepoCard key={repo.id} repo={repo} username={username} />
 				))}
 			</div>
 		</div>

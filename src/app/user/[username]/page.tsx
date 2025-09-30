@@ -30,7 +30,7 @@ async function UserRepos({ username }: { username: string }) {
     );
   }
 
-  return <RepoGrid repos={repos} />;
+  return <RepoGrid repos={repos} username={username} />;
 }
 
 export default async function UserPage({ params }: { params: Promise<{ username: string }> }) {
