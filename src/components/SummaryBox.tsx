@@ -4,13 +4,17 @@ interface SummaryBoxProps {
 }
 
 function renderInline(text: string) {
-  const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g);
+  // Handle bold, italic, and emoji formatting
+  const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*|🔥|📝|⏸️|🌟|🤖|👤|📊|🚀|📈|🎯)/g);
   return parts.map((part, idx) => {
     if (part.startsWith('**') && part.endsWith('**')) {
-      return <strong key={idx}>{part.slice(2, -2)}</strong>;
+      return <strong key={idx} className="font-semibold text-gray-900">{part.slice(2, -2)}</strong>;
     }
     if (part.startsWith('*') && part.endsWith('*')) {
-      return <em key={idx}>{part.slice(1, -1)}</em>;
+      return <em key={idx} className="italic text-gray-700">{part.slice(1, -1)}</em>;
+    }
+    if (['🔥', '📝', '⏸️', '🌟', '🤖', '👤', '📊', '🚀', '📈', '🎯'].includes(part)) {
+      return <span key={idx} className="text-lg">{part}</span>;
     }
     return <span key={idx}>{part}</span>;
   });
@@ -61,11 +65,31 @@ export default function SummaryBox({ summary, isLoading = false }: SummaryBoxPro
         <h3 className="text-lg font-semibold text-blue-900">AI Profile Summary</h3>
       </div>
       <div className="prose prose-sm max-w-none text-gray-700">
-        {summary.split('\n').map((paragraph, index) => (
-          <p key={index} className="mb-3 last:mb-0">
-            {renderInline(paragraph)}
-          </p>
-        ))}
+        {summary.split('\n').map((paragraph, index) => {
+          // Handle different types of content
+          if (paragraph.startsWith('## ')) {
+            return (
+              <h2 key={index} className="text-xl font-bold text-gray-900 mt-6 mb-3 first:mt-0">
+                {renderInline(paragraph.slice(3))}
+              </h2>
+            );
+          }
+          if (paragraph.startsWith('### ')) {
+            return (
+              <h3 key={index} className="text-lg font-semibold text-gray-800 mt-4 mb-2">
+                {renderInline(paragraph.slice(4))}
+              </h3>
+            );
+          }
+          if (paragraph.trim() === '') {
+            return <br key={index} />;
+          }
+          return (
+            <p key={index} className="mb-3 last:mb-0 leading-relaxed">
+              {renderInline(paragraph)}
+            </p>
+          );
+        })}
       </div>
     </div>
   );
